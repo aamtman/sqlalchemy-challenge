@@ -45,7 +45,8 @@ def welcome():
 def stations():
     # Create our session (link) from Python to the DB
     session = Session(engine)
-
+    query = 'SELECT station, name FROM stations'
+    return jsonify(pd.read_sql(query, engine).to)
     """Return a list of all passenger names"""
     # Query all passengers
     results = session.query(Measurement.date, Measurement.prcp).all()
