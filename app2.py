@@ -45,18 +45,20 @@ def welcome():
 def stations():
     # Create our session (link) from Python to the DB
     session = Session(engine)
+    stations query = session.query(Station.name, Station.station)
+    stations=pd.read_sql(stations_query.statement, stations_query.session.bind)
     query = 'SELECT station, name FROM stations'
     return jsonify(pd.read_sql(query, engine).to)
     """Return a list of all passenger names"""
     # Query all passengers
-    results = session.query(Measurement.date, Measurement.prcp).all()
+    #results = session.query(Measurement.date, Measurement.prcp).all()
 
     session.close()
 
     # Convert list of tuples into normal list
-    precipitation = {date: prcp for date, prcp in results}
+    stations = {name: Station for name, station for results}
 
-    return jsonify(precipitation)
+    return jsonify(stations.to_dict())
 
 
 # @app.route("/api/v1.0/passengers")
